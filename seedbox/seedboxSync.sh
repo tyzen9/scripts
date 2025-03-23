@@ -15,9 +15,6 @@ fi
 # Source the config file to load variables
 source "$CONFIG_FILE"  # or use: . "$CONFIG_FILE"
 
-# Make the directory where we will store our log file
-mkdir -p $LOG_DIR
-
 # Attempt to create a lock file, if we can't then the process is running already, so exit
 mkdir -p $LOCK_DIR
 exec {lock_fd}>$LOCK_DIR/lftpLock || exit 1
@@ -26,8 +23,8 @@ flock -n "$lock_fd" || { echo "ERROR: flock() failed - existing lftp command alr
 
 lftp -u $SSH_USERNAME,$SSH_PASSWORD \
      -e "mirror --continue --verbose --delete --parallel=5 --use-pget-n=5 --exclude $EXCLUDE_1 --exclude $EXCLUDE_2 $SEEDBOX_SOURCE_DIR $TARGET_DIR; quit" \
-     sftp://$SEEDBOX_HOSTNAME:$SSH_PORT 
-#     | ts '[%Y-%m-%d %H:%M:%S]' >> $LOG_DIR/$LOG_FILENAME
+     sftp://$SEEDBOX_HOSTNAME:$SSH_PORT \
+     | ts '[%Y-%m-%d %H:%M:%S]' >> $SCRIPT_DIR/$LOG_FILENAME
 
 flock -u "$lock_fd"
 
