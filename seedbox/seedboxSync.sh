@@ -1,7 +1,10 @@
 #!/bin/bash
 
-# Path to the config file (adjust if needed)
-CONFIG_FILE="config.sh"
+# Get the directory where the script is located
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+# Path to the config file in the same directory as the script
+CONFIG_FILE="$SCRIPT_DIR/config.sh"
 
 # Check if the config file exists
 if [[ ! -f "$CONFIG_FILE" ]]; then
