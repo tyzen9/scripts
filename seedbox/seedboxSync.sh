@@ -22,7 +22,7 @@ exec {lock_fd}>$LOCK_DIR/lftpLock || exit 1
 flock -n "$lock_fd" || { echo "ERROR: flock() failed - existing lftp command already running." >&2; exit 1; }
 
 lftp -u $SSH_USERNAME,$SSH_PASSWORD \
-     -e "mirror --continue --verbose --parallel=5 --use-pget-n=5 --exclude $EXCLUDE_1 --exclude $EXCLUDE_2 $SEEDBOX_SOURCE_DIR $TARGET_DIR; quit" \
+     -e "mirror --continue --verbose --delete --parallel=5 --use-pget-n=5 --exclude $EXCLUDE_1 --exclude $EXCLUDE_2 $SEEDBOX_SOURCE_DIR $TARGET_DIR; quit" \
      sftp://$SEEDBOX_HOSTNAME:$SSH_PORT 
 #     | ts '[%Y-%m-%d %H:%M:%S]' >> $LOG_DIR/$LOG_FILENAME
 
