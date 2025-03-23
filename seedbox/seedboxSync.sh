@@ -23,8 +23,8 @@ flock -n "$lock_fd" || { echo "ERROR: flock() failed - existing lftp command alr
 
 lftp -u $SSH_USERNAME,$SSH_PASSWORD \
      -e "mirror --continue --verbose --delete --parallel=5 --use-pget-n=5 --exclude $EXCLUDE_1 --exclude $EXCLUDE_2 $SEEDBOX_SOURCE_DIR $TARGET_DIR; quit" \
-     sftp://$SEEDBOX_HOSTNAME:$SSH_PORT \
-     | ts '[%Y-%m-%d %H:%M:%S]' >> $SCRIPT_DIR/$LOG_FILENAME
+     sftp://$SEEDBOX_HOSTNAME:$SSH_PORT #\
+     #| ts '[%Y-%m-%d %H:%M:%S]' >> $SCRIPT_DIR/$LOG_FILENAME
 
 flock -u "$lock_fd"
 

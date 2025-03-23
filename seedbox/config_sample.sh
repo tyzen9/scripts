@@ -13,7 +13,6 @@ EXCLUDE_2="freeleech/"
 
 # Where would you like lftp to place the downloads and maintain
 # syncronization?
-# LOCAL_DIR="/mnt/hdd4/seedbox/downloads/"
 TARGET_DIR="${HOME}/seedbox_test/downloads/"
 
 # A logfile is generated in the same directory as the script
