@@ -1,5 +1,19 @@
 #!/bin/bash
 
+# -------------------------------------------------------------
+# In order to make sure the files are fully downloaded before
+# being picked up by *arr apps, add a temp extension.  This is
+# done by creating this file:
+#
+# ${HOME}/.lftp/rc  (See rc.sample file)
+#
+# and adding the following lines to this file:
+#  
+# set xfer:use-temp-file yes
+# set xfer:temp-file-name *.lftp
+# 
+# -------------------------------------------------------------
+
 # Get the directory where the script is located
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
@@ -23,9 +37,6 @@ flock -n "$lock_fd" || { echo "ERROR: flock() failed - existing lftp command alr
 
 lftp -u $SSH_USERNAME,$SSH_PASSWORD \
      -e "mirror --continue --verbose --delete --parallel=5 --use-pget-n=5 --exclude $EXCLUDE_1 --exclude $EXCLUDE_2 $SEEDBOX_SOURCE_DIR $TARGET_DIR; quit" \
-     sftp://$SEEDBOX_HOSTNAME:$SSH_PORT #\
-     #| ts '[%Y-%m-%d %H:%M:%S]' >> $SCRIPT_DIR/$LOG_FILENAME
+     sftp://$SEEDBOX_HOSTNAME:$SSH_PORT 
 
 flock -u "$lock_fd"
-
-
