@@ -31,7 +31,7 @@ fi
 source "$CONFIG_FILE"  # or use: . "$CONFIG_FILE"
 
 # Build the final backdir path
-BACKUP_DIR="$BACKUP_ROOT_DIR/$VOL_BACKUP_FOLDER_PREFIX/$VOL_BACKUP_FOLDER_PREFIX-$TIMESTAMP"
+BACKUP_DIR="$BACKUP_ROOT_DIR/$HOSTNAME/$VOL_BACKUP_FOLDER_PREFIX/$VOL_BACKUP_FOLDER_PREFIX-$TIMESTAMP"
 
 # Which Volumes you want to backup (separated by space)?
 # VOLUME=$(docker volume ls  -q) for all volumes
