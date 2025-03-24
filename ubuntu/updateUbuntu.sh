@@ -1,17 +1,16 @@
 #!/bin/bash
-@echo off
-echo This script will start the Ubuntu full update process
-echo Are you sure you want to continue?
+echo "This script will start the full ubuntu update process, including a \"full upgrade\""
+echo -n "Are you sure you want to continue? (y/N): "
 
-CHOICE /C YN /M "Press Y for Yes, N for No: "
+read answer
 
-IF %ERRORLEVEL% EQU 1 (
+if [[ "$answer" =~ ^[Yy]$ ]]; then
     apt-get update
     apt-get upgrade -y
     apt-get full-upgrade -y
     apt-get autoremove -y
     apt-get autoclean -y
-) ELSE (
-    echo You chose No. Aborting...
-    exit /b
-)
+else
+    echo "You chose no (or invalid input). Aborting..."
+    exit 1
+fi
